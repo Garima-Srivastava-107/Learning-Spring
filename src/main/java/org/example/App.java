@@ -1,5 +1,8 @@
 package org.example;
 
+import org.example.controller.DemoController;
+import org.example.repository.DemoRepository;
+import org.example.service.DemoService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -22,11 +25,18 @@ public class App
 //        **********Using java based configuration***********
         ApplicationContext applicationContext=new AnnotationConfigApplicationContext(AppConfig.class);
         Car car=applicationContext.getBean(Car.class);
-        car.move();
+//        car.move();
         Bus bus=applicationContext.getBean(Bus.class);
-        bus.move();
+//        bus.move();
         Traveller traveller=applicationContext.getBean(Traveller.class);
         traveller.show();
+        DemoController demoController=applicationContext.getBean(DemoController.class);
+        System.out.println(demoController.hello());
+        DemoRepository demoRepository=applicationContext.getBean(DemoRepository.class);
+        System.out.println(demoRepository.hello());
+        //this is how we can use stereotype annotation to create spring bean in a spring IOC Container
+        DemoService demoService=applicationContext.getBean(DemoService.class);
+        System.out.println(demoService.hello());
 // Once we annotate a  AppConfig class with @Configuration annotation then the class become a configuration class
 //        and we can configure spring bean definition within this config class
 //        Once the config class is ready create a method and annotate it with bean annotation
@@ -35,4 +45,14 @@ public class App
 //        In java based configuration we need to inject this dependency manaually
 //        as the traveller class depend on the bike class so we need to inject this dependency manually
     }
+//    Intellije shortcuts:
+    /*
+Pressing [Ctrl+B] it on a class name will take us to the class file.
+
+Question : Differentiate between dependency injection and spring IOC container.
+Answer : Spring IOC container is responsible for creating the spring beans,injecting the required dependencies  and managing the life cycle of the spring beans.
+while DI is only responsible to inject the required dependencies it won't create the spring beans and manage those spring beans life cycle.
+Spring IOC container uses DI to inject one object into another object
+*/
+
 }
